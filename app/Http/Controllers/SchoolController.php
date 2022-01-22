@@ -6,6 +6,8 @@ use App\Http\Requests\StoreSchoolRequest;
 use App\Http\Requests\UpdateSchoolRequest;
 use App\Models\School;
 
+use Illuminate\Http\Request;
+
 class SchoolController extends Controller
 {
     /**
@@ -15,7 +17,8 @@ class SchoolController extends Controller
      */
     public function index()
     {
-        //
+        $schools = School::all();
+        return view('school.index',['schools'=> $schools]);
     }
 
     /**
@@ -25,7 +28,8 @@ class SchoolController extends Controller
      */
     public function create()
     {
-        //
+        $select_values = School::all();
+        return view('school.create', ['select_values' => $select_values]); 
     }
 
     /**
@@ -34,9 +38,16 @@ class SchoolController extends Controller
      * @param  \App\Http\Requests\StoreSchoolRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSchoolRequest $request)
+    public function store(Request $request)
     {
-        //
+        $school = new School;
+        $school->name = $request->school_name;
+        $school->description = $request->school_description;
+        $school->place = $request->school_place;
+        $school->phone = $request->school_phone;
+        
+        $school->save();
+        return redirect()->route('school.index');
     }
 
     /**
@@ -47,7 +58,7 @@ class SchoolController extends Controller
      */
     public function show(School $school)
     {
-        //
+        return view('school.show', ['school' => $school]);
     }
 
     /**
@@ -58,7 +69,8 @@ class SchoolController extends Controller
      */
     public function edit(School $school)
     {
-        //
+        $select_values = School::all();
+        return view('school.edit', ['school' => $school, 'select_values' => $select_values]);
     }
 
     /**
@@ -68,9 +80,15 @@ class SchoolController extends Controller
      * @param  \App\Models\School  $school
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSchoolRequest $request, School $school)
+    public function update(Request $request, School $school)
     {
-        //
+        $school->name = $request->school_name;
+        $school->description = $request->school_description;
+        $school->place = $request->school_place;
+        $school->phone = $request->school_phone;
+        
+        $school->save();
+        return redirect()->route('school.index');
     }
 
     /**
@@ -81,6 +99,7 @@ class SchoolController extends Controller
      */
     public function destroy(School $school)
     {
-        //
+        $school->delete();
+        return redirect()->route('school.index');
     }
 }
