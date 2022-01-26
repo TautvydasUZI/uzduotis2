@@ -17,7 +17,8 @@ class AttendancegroupController extends Controller
      */
     public function index()
     {
-        //
+        $attendancegroups = Attendancegroup::all();
+        return view('attendancegroup.index',['attendancegroups'=> $attendancegroups]);
     }
 
     /**
@@ -27,7 +28,8 @@ class AttendancegroupController extends Controller
      */
     public function create()
     {
-        //
+        $select_values = Attendancegroup::all();
+        return view('attendancegroup.create', ['select_values' => $select_values]); 
     }
 
     /**
@@ -36,9 +38,16 @@ class AttendancegroupController extends Controller
      * @param  \App\Http\Requests\StoreAttendancegroupRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAttendancegroupRequest $request)
+    public function store(Request $request)
     {
-        //
+        $attendancegroup = new Attendancegroup;
+        $attendancegroup->name = $request->attendancegroup_name;
+        $attendancegroup->description = $request->attendancegroup_description;
+        $attendancegroup->difficulty = $request->attendancegroup_difficulty;
+        $attendancegroup->school_id = $request->attendancegroup_schoolid;
+        
+        $attendancegroup->save();
+        return redirect()->route('attendancegroup.index');
     }
 
     /**
@@ -49,7 +58,7 @@ class AttendancegroupController extends Controller
      */
     public function show(Attendancegroup $attendancegroup)
     {
-        //
+        return view('attendancegroup.show', ['attendancegroup' => $attendancegroup]);
     }
 
     /**
@@ -60,7 +69,8 @@ class AttendancegroupController extends Controller
      */
     public function edit(Attendancegroup $attendancegroup)
     {
-        //
+        $select_values = Attendancegroup::all();
+        return view('attendancegroup.edit', ['attendancegroup' => $attendancegroup, 'select_values' => $select_values]);
     }
 
     /**
@@ -70,9 +80,15 @@ class AttendancegroupController extends Controller
      * @param  \App\Models\Attendancegroup  $attendancegroup
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAttendancegroupRequest $request, Attendancegroup $attendancegroup)
+    public function update(Request $request, Attendancegroup $attendancegroup)
     {
-        //
+        $attendancegroup->name = $request->attendancegroup_name;
+        $attendancegroup->description = $request->attendancegroup_description;
+        $attendancegroup->difficulty = $request->attendancegroup_difficulty;
+        $attendancegroup->school_id = $request->attendancegroup_schoolid;
+        
+        $attendancegroup->save();
+        return redirect()->route('attendancegroup.index');
     }
 
     /**
@@ -83,6 +99,7 @@ class AttendancegroupController extends Controller
      */
     public function destroy(Attendancegroup $attendancegroup)
     {
-        //
+        $attendancegroup->delete();
+        return redirect()->route('attendancegroup.index');
     }
 }

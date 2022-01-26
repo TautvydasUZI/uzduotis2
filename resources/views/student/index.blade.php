@@ -22,9 +22,9 @@
               </nav>
             </div>
             <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-              <h1 class="display-4 fw-normal">School</h1>
+              <h1 class="display-4 fw-normal">Students</h1>
                 @if (count($students) == 0)
-                    <p class="text-danger">There is no school</p>
+                    <p class="text-danger">There is no students</p>
                 @endif
                 <a class="btn btn-primary" href="{{route('student.create')}}">Add Student</a>
             </div>
@@ -41,6 +41,7 @@
             </tr>
             
             @foreach ($students as $student)
+              <tr>
                 <td>{{$student->id}}</td>
                 <td>{{$student->name}}</td>
                 <td>{{$student->surname}}</td>
@@ -54,10 +55,10 @@
                       <button class="btn btn-danger" type="submit">Delete</button>
                   </form>
                 </td>
+              </tr>
             @endforeach
-
-
         </table>
+
         <footer class="my-5 pt-5 text-muted text-center text-small">
             <p class="mb-1">&copy; 2022 Tautvydas Uziela</p>
             <ul class="list-inline">
