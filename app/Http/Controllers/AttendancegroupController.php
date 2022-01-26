@@ -6,6 +6,8 @@ use App\Http\Requests\StoreAttendancegroupRequest;
 use App\Http\Requests\UpdateAttendancegroupRequest;
 use App\Models\Attendancegroup;
 
+use Illuminate\Http\Request;
+
 class AttendancegroupController extends Controller
 {
     /**
